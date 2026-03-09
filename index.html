@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Threads Video Downloader - Download Threads Videos & Images Online</title>
+    <meta name="description" content="Fast, free, and secure Threads video downloader. Save high-quality videos and images from Threads instantly. No login required.">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans">
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 w-full glass-card border-b border-slate-200/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <a href="/" class="flex items-center">
+                    <div class="bg-black text-white p-1.5 rounded-lg mr-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                    </div>
+                    <span class="font-display font-bold text-xl tracking-tight">Threads<span>Downloader</span></span>
+                </a>
+                <div class="hidden md:flex space-x-8">
+                    <a href="/" class="text-black font-medium transition-colors">Home</a>
+                    <a href="/pages/threads-video-downloader.html" class="text-slate-600 hover:text-black font-medium transition-colors">Downloader</a>
+                    <a href="/pages/how-to-download-threads-video.html" class="text-slate-600 hover:text-black font-medium transition-colors">Guide</a>
+                </div>
+                <div class="flex items-center">
+                    <a href="/pages/contact.html" class="bg-black text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-slate-800 transition-all shadow-lg shadow-black/10">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient pt-20 pb-32 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="font-display font-extrabold text-5xl md:text-7xl tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-b from-slate-900 to-slate-600">
+                Threads Video Downloader
+            </h1>
+            <p class="text-slate-600 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
+                Fast and easy way to download Threads videos and images in HD quality.
+            </p>
+
+            <!-- Downloader Box -->
+            <div class="max-w-2xl mx-auto">
+                <div class="glass-card p-2 rounded-3xl flex flex-col md:flex-row gap-2">
+                    <div class="flex-1 relative">
+                        <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none text-slate-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                        </div>
+                        <input id="url-input" type="text" placeholder="Paste Threads link here (e.g., https://www.threads.net/@user/post/...)" class="w-full pl-12 pr-4 py-4 bg-transparent border-none focus:ring-0 text-slate-900 placeholder:text-slate-400 font-medium">
+                    </div>
+                    <button id="download-btn" class="bg-black text-white px-8 py-4 rounded-2xl font-bold hover:bg-slate-800 transition-all flex items-center justify-center gap-2 shadow-xl shadow-black/20">
+                        <span id="download-text" class="flex items-center gap-2">
+                            Download
+                        </span>
+                        <div id="loading-spinner" class="hidden w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    </button>
+                </div>
+                <div id="error-section" class="hidden mt-4 p-4 rounded-2xl bg-red-50 border border-red-100 text-red-600 text-sm font-medium flex items-center gap-3"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Result Section -->
+    <section id="result-section" class="hidden py-12 px-4 -mt-20">
+        <div class="max-w-2xl mx-auto glass-card rounded-[2.5rem] overflow-hidden p-8">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-2 text-emerald-600 font-bold">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    Media Found
+                </div>
+                <div id="media-type-label" class="px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-xs font-bold uppercase tracking-wider">VIDEO</div>
+            </div>
+            <div id="media-preview" class="aspect-video bg-slate-100 rounded-3xl overflow-hidden mb-8 shadow-inner flex items-center justify-center relative group"></div>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <button id="save-btn" class="flex-1 bg-black text-white py-4 rounded-2xl font-bold text-center hover:bg-slate-800 transition-all flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                    Save Media
+                </button>
+                <button id="another-btn" class="px-8 py-4 rounded-2xl border border-slate-200 font-bold text-slate-600 hover:bg-slate-50 transition-all">Download Another</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Use -->
+    <section class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="font-display font-extrabold text-3xl text-center mb-16">How to Download Threads Videos?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="relative p-8 rounded-3xl bg-white shadow-sm border border-slate-100">
+                    <div class="absolute -top-4 -left-4 w-12 h-12 bg-black text-white rounded-2xl flex items-center justify-center font-display font-bold text-xl shadow-lg">1</div>
+                    <h3 class="font-display font-bold text-xl mb-3">Copy Link</h3>
+                    <p class="text-slate-500 leading-relaxed">Open Threads and copy the URL of the post containing the video or image.</p>
+                </div>
+                <div class="relative p-8 rounded-3xl bg-white shadow-sm border border-slate-100">
+                    <div class="absolute -top-4 -left-4 w-12 h-12 bg-black text-white rounded-2xl flex items-center justify-center font-display font-bold text-xl shadow-lg">2</div>
+                    <h3 class="font-display font-bold text-xl mb-3">Paste Link</h3>
+                    <p class="text-slate-500 leading-relaxed">Paste the link into the input box at the top of this page.</p>
+                </div>
+                <div class="relative p-8 rounded-3xl bg-white shadow-sm border border-slate-100">
+                    <div class="absolute -top-4 -left-4 w-12 h-12 bg-black text-white rounded-2xl flex items-center justify-center font-display font-bold text-xl shadow-lg">3</div>
+                    <h3 class="font-display font-bold text-xl mb-3">Download</h3>
+                    <p class="text-slate-500 leading-relaxed">Click the "Download" button and wait for the preview. Then click "Save Media".</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-20 bg-white">
+        <div class="max-w-3xl mx-auto px-4">
+            <h2 class="font-display font-extrabold text-3xl text-center mb-12">Frequently Asked Questions</h2>
+            <div class="space-y-6">
+                <div class="p-6 rounded-2xl border border-slate-100 bg-slate-50/50">
+                    <h3 class="font-bold text-lg mb-2 flex items-center">Is this Threads downloader free?</h3>
+                    <p class="text-slate-600 leading-relaxed">Yes, our tool is completely free to use. You can download as many videos as you want without any limitations.</p>
+                </div>
+                <div class="p-6 rounded-2xl border border-slate-100 bg-slate-50/50">
+                    <h3 class="font-bold text-lg mb-2 flex items-center">Do I need to login to download?</h3>
+                    <p class="text-slate-600 leading-relaxed">No, you don't need to log in or create an account. Just paste the link and download.</p>
+                </div>
+                <div class="p-6 rounded-2xl border border-slate-100 bg-slate-50/50">
+                    <h3 class="font-bold text-lg mb-2 flex items-center">Does it work on mobile?</h3>
+                    <p class="text-slate-600 leading-relaxed">Absolutely! Our website is fully responsive and works perfectly on Android, iOS, and tablets.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="footer-content flex flex-col md:flex-row justify-between items-center gap-8">
+                <div class="footer-logo flex items-center">
+                    <div class="bg-black text-white p-1.5 rounded-lg mr-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                    </div>
+                    <span class="font-display font-bold text-lg tracking-tight">Threads<span>Downloader</span></span>
+                </div>
+                <p class="text-slate-400 text-xs">© 2024 Threads Downloader. All rights reserved.</p>
+                <div class="footer-links flex space-x-6 text-xs text-slate-500">
+                    <a href="#" class="hover:text-black">Privacy Policy</a>
+                    <a href="#" class="hover:text-black">Terms of Service</a>
+                    <a href="/pages/contact.html" class="hover:text-black">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="/script.js"></script>
+</body>
+</html>
