@@ -1,0 +1,16 @@
+name = "threads-downloader-api"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+type = "service"
+
+[build]
+command = ""
+cwd = ""
+
+[[routes]]
+pattern = "example.com/api/*"
+zone_name = "example.com"
+
+[vars]
+# Add environment variables here if needed
+# Example: API_KEY = "your-key-here"
